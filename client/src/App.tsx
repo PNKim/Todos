@@ -1,34 +1,33 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
+import Todo from "./components/Todo";
+import AddTodo from "./components/AddTodo";
+import axios from "axios";
 
 function App() {
-  const [count, setCount] = useState<number>(0);
+  const [todo, setTodo] = useState<unknown[]>([]);
+  const getData = async () => {
+    const listTodo = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/todo`
+    );
+    setTodo(listTodo.data.data);
+  };
+  console.log(todo);
+  const filterTodo = todo.filter((item) => {
+    return item.status === "incompleted";
+  });
+
+  useEffect(() => {
+    if (!todo[0]) {
+      getData();
+    }
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <section className="w-full min-h-screen py-10 lg:px-10 flex flex-col items-center gap-6">
+      <AddTodo />
+      <Todo todos={filterTodo} />
+    </section>
   );
 }
 
