@@ -1,11 +1,21 @@
+import axios from "axios";
 import { useState } from "react";
 
-export default function AddTodo() {
+export default function AddTodo({ addNewTodo }) {
   const [input, setInput] = useState<string | number>("");
 
-  const handleClick = () => {
-    console.log(input);
+  const handleClick = async () => {
+    try {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/todo`, {
+        title: input,
+      });
+      setInput("");
+      addNewTodo();
+    } catch {
+      alert("Can't add Todo");
+    }
   };
+
   return (
     <div className="w-[90%] lg:w-[50%] h-fit py-4 px-8 rounded-full bg-gray-300 flex justify-between items-center">
       <input
