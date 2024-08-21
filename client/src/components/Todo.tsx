@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default function Todo({ todos, handleDelete }) {
   const [dateTime, setDateTime] = useState(new Date());
+  const [dateUI, setDateUI] = useState({});
 
   const updateTodo = async (data) => {
     try {
@@ -32,7 +33,11 @@ export default function Todo({ todos, handleDelete }) {
         return (
           <div
             key={item.id}
-            className="w-[90%] lg:w-[50%] h-fit py-4 px-8 bg-white rounded-xl border-2 drop-shadow-md flex justify-between items-center relative z-1"
+            className={
+              dateUI[item.id] === item.id
+                ? "w-[90%] lg:w-[50%] h-fit py-4 px-8 mb-60 bg-white rounded-xl border-2 drop-shadow-md flex justify-between items-center relative z-1"
+                : "w-[90%] lg:w-[50%] h-fit py-4 px-8 bg-white rounded-xl border-2 drop-shadow-md flex justify-between items-center relative z-1"
+            }
           >
             <div className="w-full flex flex-col sm:flex-row justify-between gap-4 sm:gap-0">
               <div className="w-full flex gap-4 items-center justify-center">
@@ -50,10 +55,17 @@ export default function Todo({ todos, handleDelete }) {
               <DatePicker
                 className="w-full sm:w-32 text-center text-2xl"
                 selected={item.set_time}
+                onFocus={(e) => {
+                  setDateUI({ [item.id]: item.id });
+                }}
+                onClickOutside={(e) => {
+                  setDateUI({});
+                }}
                 onChange={(date) => {
                   setDateTime(date);
                   item.set_time = date;
                   updateTodo(item);
+                  setDateUI({});
                 }}
               />
             </div>

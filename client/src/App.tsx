@@ -42,7 +42,7 @@ function App() {
     <section className="w-full min-h-screen py-10 lg:px-10 flex flex-col items-center gap-6">
       <AddTodo addNewTodo={handleNewTod} />
       <Todo todos={inCompleteTodo} handleDelete={handleDelete} />
-      {/* <Complete todos={completeTodo} handleDelete={handleDelete} /> */}
+      <Complete todos={completeTodo} handleDelete={handleDelete} />
     </section>
   );
 }
