@@ -16,20 +16,23 @@ function App() {
     setTodo(listTodo.data.data);
   };
   const inCompleteTodo = todo.filter((item) => {
-    return item.status === "incompleted";
+    const todoItem = item as { status: string };
+    return todoItem.status === "incompleted";
   });
 
   const completeTodo = todo.filter((item) => {
-    return item.status === "completed";
+    const todoItem = item as { status: string };
+    return todoItem.status === "completed";
   });
 
   const handleNewTod = () => {
     setNewTodos(!newTodos);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     const filterTodo = todo.filter((item) => {
-      return item.id !== id;
+      const todoItem = item as { id: number };
+      return todoItem.id !== id;
     });
     setTodo(filterTodo);
   };

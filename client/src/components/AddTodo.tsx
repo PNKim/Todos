@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
 
-export default function AddTodo({ addNewTodo }) {
+interface MyAddTodo {
+  addNewTodo: () => void;
+}
+
+export default function AddTodo({ addNewTodo }: MyAddTodo) {
   const [input, setInput] = useState<string | number>("");
 
   const handleClick = async () => {
