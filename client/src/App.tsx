@@ -8,6 +8,7 @@ import Complete from "./components/complete";
 function App() {
   const [todo, setTodo] = useState<unknown[]>([]);
   const [newTodos, setNewTodos] = useState<boolean>(false);
+  console.log(import.meta.env.VITE_BACKEND_URL);
 
   const getData = async () => {
     const listTodo = await axios.get(
